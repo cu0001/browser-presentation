@@ -1,0 +1,754 @@
+/* ========== Reset & Base ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue-deep:  #0f4c81;
+  --teal:       #1a9e7e;
+  --grad-main:  linear-gradient(135deg, #0f4c81 0%, #1a9e7e 100%);
+  --grad-bg:    linear-gradient(135deg, #0a3a6e 0%, #0d7c62 100%);
+  --grad-sum:   linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  --surface:    #ffffff;
+  --surface-2:  #f8faff;
+  --border:     #e2e8f0;
+  --text-main:  #1a202c;
+  --text-sub:   #4a5568;
+  --text-muted: #718096;
+}
+
+body {
+  font-family: 'Noto Sans JP', 'Segoe UI', Arial, sans-serif;
+  background: var(--grad-bg);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========== Progress Bar ========== */
+#progress-bar-track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255,255,255,0.15);
+  z-index: 200;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #64ffda, #a78bfa);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px rgba(100,255,218,0.6);
+}
+
+/* ========== Slide Wrapper ========== */
+.slide-wrapper {
+  position: relative;
+  width: 90vw;
+  height: 82vh;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 25px 70px rgba(0,0,0,0.4),
+    0 0 0 1px rgba(255,255,255,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+/* ========== Slides ========== */
+.slide {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom right, #ffffff 0%, #f8faff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3vh 4vw 6vh;
+  opacity: 0;
+  transform: translateX(60px);
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* ========== Title Slide ========== */
+.slide-title {
+  background: var(--grad-main);
+  overflow: hidden;
+}
+
+/* タイトル背景のアニメーション装飾 */
+.slide-title::before,
+.slide-title::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  animation: float 8s ease-in-out infinite;
+}
+.slide-title::before {
+  width: 45vw;
+  height: 45vw;
+  top: -20%;
+  right: -10%;
+  animation-delay: 0s;
+}
+.slide-title::after {
+  width: 30vw;
+  height: 30vw;
+  bottom: -15%;
+  left: -5%;
+  animation-delay: -4s;
+  background: rgba(255,255,255,0.06);
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(2%, 3%) scale(1.04); }
+}
+
+/* ========== Summary Slide ========== */
+.slide-summary {
+  background: var(--grad-sum);
+  overflow: hidden;
+}
+.slide-summary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 20%, rgba(168,85,247,0.25) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ========== Slide Content ========== */
+.slide-content {
+  width: 100%;
+  max-width: 980px;
+  position: relative;
+  z-index: 1;
+}
+.slide-content.center { text-align: center; }
+
+/* ========== Title Slide Elements ========== */
+.slide-title .tag {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: clamp(0.72rem, 1.3vw, 0.9rem);
+  padding: 0.3rem 1.1rem;
+  border-radius: 999px;
+  margin-bottom: 1.4rem;
+  border: 1px solid rgba(255,255,255,0.4);
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(4px);
+  animation: slideDown 0.7s ease 0.1s both;
+}
+
+.slide-title h1 {
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.25);
+  animation: slideDown 0.7s ease 0.2s both;
+}
+
+.slide-title .subtitle {
+  font-size: clamp(1rem, 1.9vw, 1.35rem);
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 1.8rem;
+  animation: slideDown 0.7s ease 0.3s both;
+}
+
+.slide-title .divider {
+  width: 60px;
+  height: 3px;
+  background: rgba(255,255,255,0.55);
+  margin: 1rem auto;
+  border-radius: 2px;
+  animation: slideDown 0.7s ease 0.4s both;
+}
+
+.slide-title .meta {
+  font-size: clamp(0.82rem, 1.4vw, 1rem);
+  color: rgba(255,255,255,0.65);
+  animation: slideDown 0.7s ease 0.5s both;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== Headings ========== */
+h2 {
+  font-size: clamp(1.3rem, 2.7vw, 2.1rem);
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid;
+  border-image: var(--grad-main);
+  border-image-slice: 1;
+  display: inline-block;
+}
+
+/* ========== Platform Badges ========== */
+.badge {
+  display: inline-block;
+  font-size: 0.65em;
+  font-weight: 700;
+  padding: 0.15em 0.6em;
+  border-radius: 6px;
+  vertical-align: middle;
+  margin-right: 0.4rem;
+  letter-spacing: 0.03em;
+}
+.badge-claude { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; }
+.badge-ibm    { background: linear-gradient(135deg, #1261a0, #0530ad); color: #fff; }
+
+/* ========== Lead Text ========== */
+.lead {
+  font-size: clamp(0.95rem, 1.85vw, 1.2rem);
+  color: var(--text-sub);
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+.lead-sm {
+  font-size: clamp(0.82rem, 1.5vw, 1rem);
+  color: var(--text-muted);
+  margin-bottom: 0.9rem;
+}
+
+/* ========== Lists ========== */
+ul { list-style: none; padding: 0; margin-top: 0.5rem; }
+
+ul li {
+  padding: 0.45rem 0 0.45rem 1.7rem;
+  position: relative;
+  font-size: clamp(0.85rem, 1.65vw, 1.08rem);
+  color: var(--text-sub);
+  line-height: 1.65;
+  transition: transform 0.2s ease;
+}
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  background: var(--grad-main);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+}
+ul li:hover { transform: translateX(5px); }
+
+/* ========== Card Grid ========== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.9rem;
+  margin-bottom: 1.1rem;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f8f4 100%);
+  border-radius: 14px;
+  padding: 1rem;
+  border: 1px solid rgba(15,76,129,0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(15,76,129,0.14);
+}
+.card-icon { font-size: 1.8rem; flex-shrink: 0; }
+.card-text strong {
+  display: block;
+  font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+}
+.card-text p {
+  font-size: clamp(0.7rem, 1.2vw, 0.82rem);
+  color: var(--text-muted);
+}
+
+/* ========== Analogy / Highlight / Tip Boxes ========== */
+.analogy-box {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-left: 4px solid #f59e0b;
+  border-radius: 0 10px 10px 0;
+  padding: 0.85rem 1rem;
+  font-size: clamp(0.78rem, 1.4vw, 0.92rem);
+  color: #78350f;
+  line-height: 1.7;
+}
+.analogy-label { font-weight: 700; color: #b45309; margin-right: 0.5rem; }
+
+.highlight-box {
+  margin-top: 1.2rem;
+  background: linear-gradient(135deg, #ebf8ff 0%, #e0fff4 100%);
+  border: 1px solid rgba(15,76,129,0.2);
+  border-radius: 12px;
+  padding: 0.9rem 1.2rem;
+  font-size: clamp(0.82rem, 1.5vw, 0.98rem);
+  color: #2c5282;
+  font-weight: 600;
+}
+
+.tip-box {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-left: 4px solid #f59e0b;
+  border-radius: 0 10px 10px 0;
+  padding: 0.75rem 1rem;
+  font-size: clamp(0.78rem, 1.4vw, 0.9rem);
+  color: #78350f;
+  line-height: 1.65;
+}
+
+/* ========== File Cards ========== */
+.file-cards { display: flex; gap: 1rem; margin-bottom: 1.4rem; }
+.file-card {
+  flex: 1;
+  text-align: center;
+  background: var(--surface-2);
+  border-radius: 14px;
+  padding: 1.1rem;
+  border: 1px solid var(--border);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.file-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(15,76,129,0.14);
+}
+.file-icon {
+  width: 3rem; height: 3rem;
+  border-radius: 10px;
+  font-size: 0.72rem; font-weight: 700; color: white;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 0.65rem;
+}
+.file-icon.html { background: linear-gradient(135deg, #e34c26, #f16529); }
+.file-icon.css  { background: linear-gradient(135deg, #264de4, #2965f1); }
+.file-icon.js   { background: linear-gradient(135deg, #c8a800, #f7c948); color: #1a1a1a; }
+.file-card strong {
+  display: block;
+  font-size: clamp(0.78rem, 1.4vw, 0.92rem);
+  color: #2d3748;
+  margin-bottom: 0.3rem;
+}
+.file-card p {
+  font-size: clamp(0.68rem, 1.2vw, 0.78rem);
+  color: var(--text-muted);
+}
+
+/* ========== Steps ========== */
+.steps { display: flex; flex-direction: column; gap: 0.65rem; }
+.step {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--surface-2);
+  border-radius: 14px;
+  padding: 0.78rem 1.1rem;
+  border: 1px solid var(--border);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.step:hover {
+  transform: translateX(6px);
+  box-shadow: 0 5px 18px rgba(15,76,129,0.12);
+}
+.step-num {
+  width: 2.2rem; height: 2.2rem;
+  border-radius: 50%;
+  background: var(--grad-main);
+  color: white;
+  font-weight: 700; font-size: 0.95rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(15,76,129,0.3);
+}
+.step-body strong {
+  display: block;
+  font-size: clamp(0.82rem, 1.55vw, 0.98rem);
+  color: var(--text-main);
+}
+.step-body p {
+  font-size: clamp(0.72rem, 1.3vw, 0.82rem);
+  color: var(--text-muted);
+  margin-top: 0.1rem;
+}
+
+/* ========== Code ========== */
+code {
+  background: #ebf8ff;
+  color: #2b6cb0;
+  padding: 0.1em 0.4em;
+  border-radius: 5px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.88em;
+}
+
+/* ========== Prompt Examples ========== */
+.prompt-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 0.8rem; }
+.prompt-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  background: var(--surface-2);
+  border-radius: 12px;
+  padding: 0.78rem 1.1rem;
+  border: 1px solid var(--border);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.prompt-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 5px 16px rgba(15,76,129,0.1);
+}
+.prompt-tag {
+  flex-shrink: 0;
+  font-size: clamp(0.62rem, 1.1vw, 0.72rem);
+  font-weight: 700;
+  padding: 0.2em 0.7em;
+  border-radius: 999px;
+  white-space: nowrap;
+  margin-top: 0.15rem;
+}
+.prompt-tag.simple   { background: #ebf8ff; color: #2b6cb0; }
+.prompt-tag.detailed { background: #f0fff4; color: #276749; }
+.prompt-tag.style    { background: #faf5ff; color: #6b21a8; }
+.prompt-tag.file     { background: #fff7ed; color: #c2410c; }
+.prompt-tag.paste    { background: #fef9c3; color: #854d0e; }
+.prompt-tag.ref      { background: #fdf2f8; color: #9d174d; }
+
+.prompt-text {
+  font-size: clamp(0.82rem, 1.55vw, 0.98rem);
+  color: #2d3748;
+  line-height: 1.65;
+}
+.prompt-note {
+  display: block;
+  font-size: 0.85em;
+  color: #a0aec0;
+  margin-top: 0.2rem;
+}
+
+/* ========== Conversion Slide ========== */
+.convert-grid { display: flex; flex-direction: column; gap: 0.65rem; }
+.convert-card {
+  background: var(--surface-2);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.convert-card:hover {
+  box-shadow: 0 6px 20px rgba(15,76,129,0.12);
+  transform: translateY(-1px);
+}
+.convert-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f8f4 100%);
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.convert-icon { font-size: 1.1rem; flex-shrink: 0; }
+.convert-header strong {
+  font-size: clamp(0.78rem, 1.45vw, 0.92rem);
+  color: var(--text-main);
+  flex: 1;
+}
+.convert-badge {
+  font-size: clamp(0.58rem, 1vw, 0.68rem);
+  font-weight: 700;
+  padding: 0.15em 0.65em;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.convert-badge.both       { background: #e0fff4; color: #276749; }
+.convert-badge.browser    { background: #ebf8ff; color: #2b6cb0; }
+.convert-badge.claude-only{ background: #faf5ff; color: #6b21a8; }
+.convert-body {
+  padding: 0.6rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.convert-prompt {
+  background: white;
+  border: 1px dashed #cbd5e0;
+  border-radius: 7px;
+  padding: 0.3rem 0.8rem;
+  font-size: clamp(0.8rem, 1.45vw, 0.92rem);
+  color: #2d3748;
+  font-weight: 600;
+}
+.convert-note {
+  font-size: clamp(0.7rem, 1.2vw, 0.8rem);
+  color: var(--text-muted);
+  width: 100%;
+  margin-top: 0.1rem;
+}
+ol.convert-steps { list-style: decimal; padding-left: 1.3rem; margin: 0; }
+ol.convert-steps li {
+  font-size: clamp(0.75rem, 1.38vw, 0.88rem);
+  color: var(--text-sub);
+  padding: 0.1rem 0;
+  line-height: 1.55;
+}
+ol.convert-steps li::before { display: none; }
+.convert-cmd {
+  display: block;
+  background: #1a202c;
+  color: #a8edca;
+  padding: 0.3rem 0.75rem;
+  border-radius: 7px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: clamp(0.62rem, 1.1vw, 0.75rem);
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+.convert-label {
+  width: 100%;
+  font-size: clamp(0.62rem, 1.1vw, 0.72rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+  margin-bottom: 0.1rem;
+}
+
+/* ========== Use Cases ========== */
+.usecase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+}
+.usecase {
+  text-align: center;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f8f4 100%);
+  border-radius: 14px;
+  padding: 1.2rem 0.8rem;
+  border: 1px solid rgba(15,76,129,0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
+}
+.usecase:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(15,76,129,0.14);
+}
+.usecase-icon { font-size: 2rem; margin-bottom: 0.55rem; }
+.usecase strong {
+  display: block;
+  font-size: clamp(0.78rem, 1.4vw, 0.92rem);
+  color: #2d3748;
+}
+
+/* ========== Summary Slide ========== */
+.slide-summary h2 {
+  color: white !important;
+  border-image: linear-gradient(90deg, rgba(255,255,255,0.75), rgba(255,255,255,0.2)) !important;
+  border-image-slice: 1 !important;
+}
+.summary-list {
+  text-align: left;
+  display: inline-block;
+  margin: 1.2rem 0;
+}
+.summary-list li {
+  color: rgba(255,255,255,0.93) !important;
+  font-size: clamp(0.98rem, 1.9vw, 1.25rem) !important;
+}
+.summary-list li::before {
+  background: rgba(255,255,255,0.85) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+.cta {
+  margin-top: 1.6rem;
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: 700;
+  color: white;
+  background: rgba(255,255,255,0.18);
+  display: inline-block;
+  padding: 0.7rem 2.2rem;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,0.45);
+  transition: background 0.25s, transform 0.2s;
+  cursor: default;
+}
+.cta:hover { background: rgba(255,255,255,0.28); transform: scale(1.03); }
+
+/* ========== Navigation Controls ========== */
+.controls {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 2rem;
+  padding: 0.5rem 1.2rem;
+  box-shadow:
+    0 10px 36px rgba(15,76,129,0.28),
+    0 0 0 1px rgba(255,255,255,0.6);
+  z-index: 100;
+}
+
+.controls button {
+  background: var(--grad-main);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 2.4rem; height: 2.4rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(15,76,129,0.35);
+}
+.controls button:hover {
+  transform: scale(1.15);
+  box-shadow: 0 6px 20px rgba(15,76,129,0.5);
+}
+.controls button:active { transform: scale(0.93); }
+.controls button:disabled {
+  background: #e2e8f0;
+  color: #a0aec0;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.counter {
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  min-width: 3.5rem;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* ========== Dot Indicators ========== */
+#slide-dots {
+  position: fixed;
+  bottom: 1.65rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  z-index: 100;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s, transform 0.3s, width 0.3s;
+}
+.dot.active {
+  background: rgba(255,255,255,0.95);
+  transform: scale(1.25);
+  width: 20px;
+  border-radius: 4px;
+}
+.dot:hover:not(.active) {
+  background: rgba(255,255,255,0.65);
+  transform: scale(1.1);
+}
+
+/* ========== Keyboard Hint ========== */
+.keyboard-hint {
+  position: fixed;
+  bottom: 1.65rem;
+  left: 2rem;
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.45);
+  z-index: 100;
+  letter-spacing: 0.04em;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.keyboard-hint kbd {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-size: 0.82em;
+  font-family: inherit;
+}
+
+/* ========== Slide 10: Compact conversion layout ========== */
+.convert-grid-10 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 0.55rem;
+}
+
+/* 方法③ は下段フル幅 */
+.convert-grid-10 .convert-card:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+/* h2 の下マージンを縮小 */
+#slide-10 h2 {
+  margin-bottom: 0.7rem;
+}
+
+/* ヘッダー・ボディのパディングをコンパクトに */
+.convert-grid-10 .convert-header {
+  padding: 0.42rem 0.85rem;
+}
+.convert-grid-10 .convert-body {
+  padding: 0.42rem 0.85rem;
+  gap: 0.38rem;
+}
+
+/* 方法③ のコマンドエリアを縦1列 */
+.convert-grid-10 .convert-card:nth-child(3) .convert-body {
+  flex-direction: column;
+  align-items: stretch;
+}
+.convert-grid-10 .convert-card:nth-child(3) .convert-body .convert-cmd {
+  font-size: clamp(0.58rem, 0.95vw, 0.72rem);
+  width: 100%;
+}
+
+/* ========== Print / PDF ========== */
+@media print {
+  body { width: 100%; height: auto; overflow: visible; background: white; display: block; }
+  .slide-wrapper { position: static; width: 100%; height: auto; overflow: visible; box-shadow: none; border-radius: 0; }
+  .slide { position: relative; display: flex !important; opacity: 1 !important; transform: none !important; width: 100%; height: 100vh; page-break-after: always; break-after: page; }
+  .slide:last-child { page-break-after: avoid; break-after: avoid; }
+  .controls, #slide-dots, #progress-bar-track, .keyboard-hint { display: none !important; }
+}

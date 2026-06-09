@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>browser-presentation スキル 入門ガイド</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="progress-bar-track">
+    <div id="progress-bar"></div>
+  </div>
+
+  <div class="slide-wrapper">
+
+    <!-- Slide 1: Title -->
+    <div class="slide slide-title active" id="slide-1">
+      <div class="slide-content center">
+        <div class="tag">入門ガイド</div>
+        <h1>browser-presentation<br>スキルを使ってみよう</h1>
+        <p class="subtitle">Claude &amp; IBM Bob 対応版</p>
+        <div class="divider"></div>
+        <p class="meta"></p>
+      </div>
+    </div>
+
+    <!-- Slide 2: What is a Skill -->
+    <div class="slide" id="slide-2">
+      <div class="slide-content">
+        <h2>そもそも「スキル」とは？</h2>
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon">🎓</div>
+            <div class="card-text">
+              <strong>専門能力パック</strong>
+              <p>AI に追加できる特定分野の能力</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon">⚡</div>
+            <div class="card-text">
+              <strong>一言で高品質な成果物</strong>
+              <p>複雑な作業を簡単な指示で完結</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔧</div>
+            <div class="card-text">
+              <strong>専門知識は不要</strong>
+              <p>プログラミング知識がなくても OK</p>
+            </div>
+          </div>
+        </div>
+        <div class="analogy-box">
+          <span class="analogy-label">たとえると...</span>
+          料理人が新しい調理技術を習得するイメージ。AI がスキルを持つことで、その分野のプロ並みの仕事ができるようになります。
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: What is browser-presentation -->
+    <div class="slide" id="slide-3">
+      <div class="slide-content">
+        <h2>browser-presentation スキルとは</h2>
+        <p class="lead">ブラウザで動くプレゼンスライドを<strong>自動生成</strong>するスキルです</p>
+        <ul>
+          <li>テーマや内容を伝えるだけで OK</li>
+          <li>HTML / CSS / JavaScript は自動で生成される</li>
+          <li>デザインセンスも不要 — プロ品質に仕上がる</li>
+          <li>完成ファイルをブラウザで開けばすぐ発表できる</li>
+        </ul>
+        <div class="highlight-box">
+          💡 このスライド自体も browser-presentation スキルで作られています！
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: What it produces -->
+    <div class="slide" id="slide-4">
+      <div class="slide-content">
+        <h2>何が生成されるの？</h2>
+        <div class="file-cards">
+          <div class="file-card">
+            <div class="file-icon html">HTML</div>
+            <strong>index.html</strong>
+            <p>スライドの中身・構造</p>
+          </div>
+          <div class="file-card">
+            <div class="file-icon css">CSS</div>
+            <strong>style.css</strong>
+            <p>デザイン・アニメーション</p>
+          </div>
+          <div class="file-card">
+            <div class="file-icon js">JS</div>
+            <strong>script.js</strong>
+            <p>ナビゲーション操作</p>
+          </div>
+        </div>
+        <ul>
+          <li>← → キー / ボタンでスライド切り替え</li>
+          <li>グラデーション・アニメーション付きのデザイン</li>
+          <li>PDF や PowerPoint への変換も可能</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Slide 5: Installation / Setup -->
+    <div class="slide" id="slide-5">
+      <div class="slide-content">
+        <h2>スキルの設定方法</h2>
+        <p class="lead">お使いの AI ツールのスキルディレクトリへ Git でクローン、または ZIP で配置します。</p>
+        
+        <div class="card-grid" style="grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem;">
+          <!-- Claude Code -->
+          <div class="card" style="display: flex; flex-direction: column; gap: 0.4rem; background: var(--surface-2); border: 1px solid var(--border); padding: 1rem; border-radius: 12px; text-align: left;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem;">
+              <span class="badge badge-claude" style="font-size: 0.8em; margin-right: 0;">Claude Code</span>
+            </div>
+            
+            <strong style="color: var(--text-main); font-size: 0.85rem;">グローバル設定（全プロジェクト）</strong>
+            <code style="display: block; font-family: monospace; background: #1a202c; color: #a8edca; padding: 0.4rem; border-radius: 6px; font-size: 0.65rem; word-break: break-all; white-space: pre-wrap; width: 100%;">git clone https://&lt;URL&gt;/browser-presentation-public.git ~/.claude/skills/browser-presentation</code>
+            
+            <strong style="color: var(--text-main); font-size: 0.85rem; margin-top: 0.3rem;">プロジェクト設定（現在のプロジェクトのみ）</strong>
+            <code style="display: block; font-family: monospace; background: #1a202c; color: #a8edca; padding: 0.4rem; border-radius: 6px; font-size: 0.65rem; word-break: break-all; white-space: pre-wrap; width: 100%;">git clone https://&lt;URL&gt;/browser-presentation-public.git ./.claude/skills/browser-presentation</code>
+          </div>
+          
+          <!-- IBM Bob -->
+          <div class="card" style="display: flex; flex-direction: column; gap: 0.4rem; background: var(--surface-2); border: 1px solid var(--border); padding: 1rem; border-radius: 12px; text-align: left;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem;">
+              <span class="badge badge-ibm" style="font-size: 0.8em; margin-right: 0;">IBM Bob</span>
+            </div>
+            
+            <strong style="color: var(--text-main); font-size: 0.85rem;">グローバル設定（全プロジェクト）</strong>
+            <code style="display: block; font-family: monospace; background: #1a202c; color: #a8edca; padding: 0.4rem; border-radius: 6px; font-size: 0.65rem; word-break: break-all; white-space: pre-wrap; width: 100%;">git clone https://&lt;URL&gt;/browser-presentation-public.git ~/.bob/skills/browser-presentation</code>
+
+            <strong style="color: var(--text-main); font-size: 0.85rem; margin-top: 0.3rem;">プロジェクト設定（現在のプロジェクトのみ）</strong>
+            <code style="display: block; font-family: monospace; background: #1a202c; color: #a8edca; padding: 0.4rem; border-radius: 6px; font-size: 0.65rem; word-break: break-all; white-space: pre-wrap; width: 100%;">git clone https://&lt;URL&gt;/browser-presentation-public.git ./.bob/skills/browser-presentation</code>
+          </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 1rem; padding: 0.8rem; text-align: left; font-size: 0.85rem; line-height: 1.4;">
+          ⚠️ <strong>重要:</strong> フォルダ名は必ず <code>browser-presentation</code> にしてください（エクスポートスクリプト内のパスと一致させるため）。<br>
+          <span style="display: inline-block; margin-top: 0.4rem;">💡 <strong>Gitが使えない場合:</strong> リポジトリから <strong>ZIPでダウンロード</strong> して解凍し、フォルダ名を変更して配置することも可能です。</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Usage on Claude -->
+    <div class="slide" id="slide-6">
+      <div class="slide-content">
+        <h2><span class="badge badge-claude">Claude</span> での使い方</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Claude Code を開く</strong>
+              <p>ターミナルまたは Claude アプリを起動する</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>スキルを呼び出す</strong>
+              <p>チャットに <code>/browser-presentation</code> と入力する</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>内容を伝える</strong>
+              <p>「〇〇についてのスライドを作って」と依頼する</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <strong>index.html をブラウザで開く</strong>
+              <p>生成された 3 ファイルの index.html を開けば完成！</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 7: Usage on IBM Bob -->
+    <div class="slide" id="slide-7">
+      <div class="slide-content">
+        <h2><span class="badge badge-ibm">IBM Bob</span> での使い方</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>IBM Bob を開く</strong>
+              <p>IBM Bob チャット画面にアクセスする</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>スキルを呼び出す</strong>
+              <p>入力欄に <code>"browser-presentation"を使用して</code> というようにスキル使用を明示する</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>内容を伝える</strong>
+              <p>「〇〇についてのスライドを作って」と依頼する</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <strong>ファイルを受け取って開く</strong>
+              <p>生成されたファイルをダウンロードし、index.html を開く</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 8: Basic prompt examples -->
+    <div class="slide" id="slide-8">
+      <div class="slide-content">
+        <h2>依頼例 — 基本の書き方</h2>
+        <p class="lead-sm">テーマ・対象者・枚数・デザインを伝えるだけで OK</p>
+        <div class="prompt-list">
+          <div class="prompt-item">
+            <div class="prompt-tag simple">シンプル</div>
+            <div class="prompt-text">「新入社員向けのセキュリティ研修スライドを作って」</div>
+          </div>
+          <div class="prompt-item">
+            <div class="prompt-tag detailed">詳細指定</div>
+            <div class="prompt-text">「〇〇プロジェクトの進捗報告スライドを 5 枚で作って。<br>対象は経営層向け。ダークテーマで」</div>
+          </div>
+          <div class="prompt-item">
+            <div class="prompt-tag style">スタイル指定</div>
+            <div class="prompt-text">「AI 活用推進の社内提案スライドを作って。<br>明るく親しみやすいデザインで、図解を多めに」</div>
+          </div>
+        </div>
+        <div class="tip-box">
+          💡 <strong>コツ：</strong>「誰に向けて」「何枚」「どんなデザイン」を伝えると、よりイメージ通りに仕上がります
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 9: Prompt with document references -->
+    <div class="slide" id="slide-9">
+      <div class="slide-content">
+        <h2>依頼例 — 他の資料を参照する</h2>
+        <p class="lead-sm">既存の文書・メモ・URLを渡してスライド化できる</p>
+        <div class="prompt-list">
+          <div class="prompt-item">
+            <div class="prompt-tag file">ファイル添付</div>
+            <div class="prompt-text">「添付の会議メモを読んで、議事録スライドを作って」<br><span class="prompt-note">→ Word / PDF / テキストファイルを一緒に渡す</span></div>
+          </div>
+          <div class="prompt-item">
+            <div class="prompt-tag paste">テキスト貼付</div>
+            <div class="prompt-text">「以下の製品仕様書をもとに、顧客向け提案スライドを作って：<br>（仕様書の内容をここにコピー&amp;ペースト）」</div>
+          </div>
+          <div class="prompt-item">
+            <div class="prompt-tag ref">既存資料を元に</div>
+            <div class="prompt-text">「去年のスライド構成を参考にしながら、<br>今年版の方針発表スライドを作って」<br><span class="prompt-note">→ 既存スライドのテキストや構成を貼り付けて渡す</span></div>
+          </div>
+        </div>
+        <div class="tip-box">
+          💡 <strong>ポイント：</strong>「何を参考にしてほしいか」を明示するほど、内容の精度が上がります
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 10: Style variations -->
+    <div class="slide" id="slide-10">
+      <div class="slide-content">
+        <h2>選べるスタイルバリエーション</h2>
+        <p class="lead-sm">依頼時に以下のキーワードを伝えることで、デザインテイストを変更できます</p>
+        <div class="card-grid" style="grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.2rem;">
+          <div class="card" style="background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); color: white; border: none; align-items: center;">
+            <div class="card-icon">🌙</div>
+            <div class="card-text">
+              <strong style="color: white; font-size: 1.05rem;">ダーク / dark mode</strong>
+              <p style="color: #cbd5e0; font-size: 0.8rem;">濃色背景・白テキスト・カラーアクセント</p>
+            </div>
+          </div>
+          <div class="card" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-left: 4px solid #4a5568; align-items: center;">
+            <div class="card-icon">🏢</div>
+            <div class="card-text">
+              <strong style="color: #2d3748; font-size: 1.05rem;">コーポレート / formal</strong>
+              <p style="color: #4a5568; font-size: 0.8rem;">ブルーグレー系・セリフ見出し・控えめな装飾</p>
+            </div>
+          </div>
+          <div class="card" style="background: linear-gradient(135deg, #fff5f5 0%, #feebc8 100%); border-left: 4px solid #ed8936; align-items: center;">
+            <div class="card-icon">🎨</div>
+            <div class="card-text">
+              <strong style="color: #c05621; font-size: 1.05rem;">ボールド / colorful</strong>
+              <p style="color: #9c4221; font-size: 0.8rem;">グラデーション背景・大きな文字・鮮やかな配色</p>
+            </div>
+          </div>
+          <div class="card" style="background: #ffffff; border: 1px solid #e2e8f0; align-items: center;">
+            <div class="card-icon">📄</div>
+            <div class="card-text">
+              <strong style="color: #1a202c; font-size: 1.05rem;">ミニマル / minimal</strong>
+              <p style="color: #718096; font-size: 0.8rem;">白背景・細いボーダー・アニメーション最小限</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 11: PPTX / PDF conversion -->
+    <div class="slide" id="slide-11">
+      <div class="slide-content">
+        <h2>PPTX・PDF に変換するには</h2>
+        <div class="convert-grid convert-grid-10">
+
+          <div class="convert-card">
+            <div class="convert-header">
+              <span class="convert-icon">🗣️</span>
+              <strong>方法① AI に依頼する（一番かんたん）</strong>
+              <span class="convert-badge both">Claude・IBM Bob 両対応</span>
+            </div>
+            <div class="convert-body">
+              <div class="convert-prompt">「PPTX に変換して」</div>
+              <div class="convert-prompt">「PDF に変換して」</div>
+              <p class="convert-note">スライド生成後にそのまま続けて依頼するだけ</p>
+            </div>
+          </div>
+
+          <div class="convert-card">
+            <div class="convert-header">
+              <span class="convert-icon">🖨️</span>
+              <strong>方法② ブラウザから PDF 保存</strong>
+              <span class="convert-badge browser">ブラウザのみ</span>
+            </div>
+            <div class="convert-body">
+              <ol class="convert-steps">
+                <li>index.html をブラウザで開く</li>
+                <li><code>Cmd+P</code>（Mac）/ <code>Ctrl+P</code>（Windows）</li>
+                <li>「PDF として保存」を選択</li>
+                <li>各スライドが 1 ページずつ出力される</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="convert-card">
+            <div class="convert-header">
+              <span class="convert-icon">⌨️</span>
+              <strong>方法③ コマンドで手動変換</strong>
+              <span class="convert-badge both">Claude・IBM Bob 両対応</span>
+            </div>
+            <div class="convert-body">
+              <div style="display: flex; gap: 1rem; width: 100%;">
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 0.3rem;">
+                  <div class="convert-label">Claude Code</div>
+                  <code class="convert-cmd" style="white-space: pre-wrap; word-break: break-all; line-height: 1.3; padding: 0.4rem; font-size: 0.6rem;">node ~/.claude/skills/browser-presentation/export-pptx.js index.html output.pptx</code>
+                  <code class="convert-cmd" style="white-space: pre-wrap; word-break: break-all; line-height: 1.3; padding: 0.4rem; font-size: 0.6rem;">node ~/.claude/skills/browser-presentation/export-pdf.js index.html output.pdf</code>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 0.3rem;">
+                  <div class="convert-label">IBM Bob</div>
+                  <code class="convert-cmd" style="white-space: pre-wrap; word-break: break-all; line-height: 1.3; padding: 0.4rem; font-size: 0.6rem;">node ~/.bob/skills/browser-presentation/export-pptx.js index.html output.pptx</code>
+                  <code class="convert-cmd" style="white-space: pre-wrap; word-break: break-all; line-height: 1.3; padding: 0.4rem; font-size: 0.6rem;">node ~/.bob/skills/browser-presentation/export-pdf.js index.html output.pdf</code>
+                </div>
+              </div>
+              <p class="convert-note" style="margin-top: 0.2rem;">※プロジェクト設定でインストールした場合は、先頭の <code>~/</code> を <code>./</code> に読み替えてください</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 12: Export Prerequisites -->
+    <div class="slide" id="slide-12">
+      <div class="slide-content">
+        <h2>エクスポートの事前準備（手動変換時）</h2>
+        <p class="lead-sm">コマンドで変換する場合、初回のみ以下の設定が必要です</p>
+        
+        <div class="steps" style="margin-bottom: 1.2rem; margin-top: 1rem;">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>必要なモジュールをインストール</strong>
+              <code style="display: block; margin-top: 0.4rem; font-size: 0.75rem;">npm install -g @mermaid-js/mermaid-cli</code>
+              <code style="display: block; margin-top: 0.3rem; font-size: 0.75rem;">pip install python-pptx</code>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>スクリプト内の Puppeteer パスを修正</strong>
+              <p style="margin-top: 0.3rem;"><code>export-pptx.js</code> と <code>export-pdf.js</code> の先頭行にある <code>require()</code> のパスを、ご自身の環境（Homebrew, Volta, nvm等）に合わせて修正してください。</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 0;">
+          💡 インストールや設定が不安な場合は、AIのサンドボックス環境を利用する<strong>「方法① AIに依頼する」</strong>がお手軽でおすすめです！
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 13: Use cases -->
+    <div class="slide" id="slide-13">
+      <div class="slide-content">
+        <h2>こんな場面で使える</h2>
+        <div class="usecase-grid">
+          <div class="usecase">
+            <div class="usecase-icon">📊</div>
+            <strong>社内発表・報告会</strong>
+          </div>
+          <div class="usecase">
+            <div class="usecase-icon">📚</div>
+            <strong>研修・勉強会資料</strong>
+          </div>
+          <div class="usecase">
+            <div class="usecase-icon">💼</div>
+            <strong>プロジェクト提案書</strong>
+          </div>
+          <div class="usecase">
+            <div class="usecase-icon">🤝</div>
+            <strong>顧客向けデモ資料</strong>
+          </div>
+          <div class="usecase">
+            <div class="usecase-icon">🎓</div>
+            <strong>勉強会・LT 発表</strong>
+          </div>
+          <div class="usecase">
+            <div class="usecase-icon">📝</div>
+            <strong>会議用スライド</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 14: Summary -->
+    <div class="slide slide-summary" id="slide-14">
+      <div class="slide-content center">
+        <h2>まとめ</h2>
+        <ul class="summary-list">
+          <li>スキル = AI に追加できる専門能力パック</li>
+          <li>browser-presentation = プレゼン自動生成スキル</li>
+          <li>一言の指示でプロ品質のスライドが完成</li>
+          <li>Claude・IBM Bob どちらでも使える</li>
+        </ul>
+        <div class="cta">✨ ぜひ試してみましょう！</div>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="controls">
+    <button id="btn-prev" aria-label="前のスライド">&#8592;</button>
+    <span class="counter" id="counter">1 / 14</span>
+    <button id="btn-next" aria-label="次のスライド">&#8594;</button>
+  </nav>
+
+  <div class="keyboard-hint">
+    <kbd>←</kbd> <kbd>→</kbd> で操作
+  </div>
+
+  <div id="slide-dots"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
