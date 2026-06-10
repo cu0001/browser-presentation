@@ -44,20 +44,20 @@ Git を使用して、お使いの AI ツールのスキルディレクトリへ
 
 ```bash
 # グローバル（全プロジェクトで使用）
-git clone https://<URL>/browser-presentation-public.git ~/.claude/skills/browser-presentation
+git clone https://<URL>/browser-presentation.git ~/.claude/skills/browser-presentation
 
 # プロジェクトローカル（現在のプロジェクトのみで使用）
-git clone https://<URL>/browser-presentation-public.git ./.claude/skills/browser-presentation
+git clone https://<URL>/browser-presentation.git ./.claude/skills/browser-presentation
 ```
 
 #### IBM Bob
 
 ```bash
 # グローバル（全プロジェクトで使用）
-git clone https://<URL>/browser-presentation-public.git ~/.bob/skills/browser-presentation
+git clone https://<URL>/browser-presentation.git ~/.bob/skills/browser-presentation
 
 # プロジェクトローカル（現在のプロジェクトのみで使用）
-git clone https://<URL>/browser-presentation-public.git ./.bob/skills/browser-presentation
+git clone https://<URL>/browser-presentation.git ./.bob/skills/browser-presentation
 ```
 
 ### 方法 2: ローカルのフォルダをコピーして配置
