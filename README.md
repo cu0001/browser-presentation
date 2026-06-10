@@ -29,6 +29,73 @@
 
 ---
 
+## インストール（スキルフォルダの配置）
+
+本スキルを AI ツールで使用するには、スキルディレクトリにフォルダを配置する必要があります。
+
+Git から直接ダウンロード（クローン）して配置する方法、またはローカルにあるフォルダをコピーする方法のいずれかで配置してください。
+
+
+### 方法 1: Git から直接ダウンロードして配置（推奨）
+
+Git を使用して、お使いの AI ツールのスキルディレクトリへ直接ダウンロードします。
+
+#### Claude Code
+
+```bash
+# グローバル（全プロジェクトで使用）
+git clone https://<URL>/browser-presentation-public.git ~/.claude/skills/browser-presentation
+
+# プロジェクトローカル（現在のプロジェクトのみで使用）
+git clone https://<URL>/browser-presentation-public.git ./.claude/skills/browser-presentation
+```
+
+#### IBM Bob
+
+```bash
+# グローバル（全プロジェクトで使用）
+git clone https://<URL>/browser-presentation-public.git ~/.bob/skills/browser-presentation
+
+# プロジェクトローカル（現在のプロジェクトのみで使用）
+git clone https://<URL>/browser-presentation-public.git ./.bob/skills/browser-presentation
+```
+
+### 方法 2: ローカルのフォルダをコピーして配置
+
+すでにリポジトリをローカルにダウンロード済みの場合は、以下のコマンドでコピーして配置できます。
+
+#### Claude Code
+
+| スコープ | 配置先 |
+|---|---|
+| **グローバル**（全プロジェクトで使用） | `~/.claude/skills/browser-presentation/` |
+| **プロジェクトローカル** | `./.claude/skills/brow ser-presentation/` |
+
+```bash
+# グローバルにインストールする場合
+cp -r browser-presentation-internal ~/.claude/skills/browser-presentation
+
+# プロジェクトローカルにインストールする場合
+cp -r browser-presentation-internal ./.claude/skills/browser-presentation
+```
+
+### IBM Bob
+
+| スコープ | 配置先 |
+|---|---|
+| **グローバル**（全プロジェクトで使用） | `~/.bob/skills/browser-presentation/` |
+| **プロジェクトローカル** | `./.bob/skills/browser-presentation/` |
+
+```bash
+# グローバルにインストールする場合
+cp -r browser-presentation-internal ~/.bob/skills/browser-presentation
+
+# プロジェクトローカルにインストールする場合
+cp -r browser-presentation-internal ./.bob/skills/browser-presentation
+```
+
+---
+
 ## 出力ファイル
 
 | ファイル | 役割 |
@@ -217,75 +284,6 @@ node ~/.claude/skills/browser-presentation/export-pdf.js index.html output.pdf
 node ~/.bob/skills/browser-presentation/export-pdf.js index.html output.pdf
 ```
 
-## インストール（スキルフォルダの配置）
-
-本スキルを AI ツールで使用するには、スキルディレクトリにフォルダを配置する必要があります。
-
-Git から直接ダウンロード（クローン）して配置する方法、またはローカルにあるフォルダをコピーする方法のいずれかで配置してください。
-
-> [!IMPORTANT]
-> どちらの方法を使用する場合でも、配置先のフォルダ名は必ず `browser-presentation` にしてください。  
-> エクスポートスクリプト内のパス（例: `~/.claude/skills/browser-presentation/...`）と一致させる必要があります。
-
-### 方法 1: Git から直接ダウンロードして配置（推奨）
-
-Git を使用して、お使いの AI ツールのスキルディレクトリへ直接ダウンロードします。
-
-#### Claude Code
-
-```bash
-# グローバル（全プロジェクトで使用）
-git clone https://<URL>/browser-presentation-public.git ~/.claude/skills/browser-presentation
-
-# プロジェクトローカル（現在のプロジェクトのみで使用）
-git clone https://<URL>/browser-presentation-public.git ./.claude/skills/browser-presentation
-```
-
-#### IBM Bob
-
-```bash
-# グローバル（全プロジェクトで使用）
-git clone https://<URL>/browser-presentation-public.git ~/.bob/skills/browser-presentation
-
-# プロジェクトローカル（現在のプロジェクトのみで使用）
-git clone https://<URL>/browser-presentation-public.git ./.bob/skills/browser-presentation
-```
-
-### 方法 2: ローカルのフォルダをコピーして配置
-
-すでにリポジトリをローカルにダウンロード済みの場合は、以下のコマンドでコピーして配置できます。
-
-#### Claude Code
-
-| スコープ | 配置先 |
-|---|---|
-| **グローバル**（全プロジェクトで使用） | `~/.claude/skills/browser-presentation/` |
-| **プロジェクトローカル** | `./.claude/skills/brow ser-presentation/` |
-
-```bash
-# グローバルにインストールする場合
-cp -r browser-presentation-internal ~/.claude/skills/browser-presentation
-
-# プロジェクトローカルにインストールする場合
-cp -r browser-presentation-internal ./.claude/skills/browser-presentation
-```
-
-### IBM Bob
-
-| スコープ | 配置先 |
-|---|---|
-| **グローバル**（全プロジェクトで使用） | `~/.bob/skills/browser-presentation/` |
-| **プロジェクトローカル** | `./.bob/skills/browser-presentation/` |
-
-```bash
-# グローバルにインストールする場合
-cp -r browser-presentation-internal ~/.bob/skills/browser-presentation
-
-# プロジェクトローカルにインストールする場合
-cp -r browser-presentation-internal ./.bob/skills/browser-presentation
-```
-
----
 
 ## ファイル構成
 
