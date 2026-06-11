@@ -9,7 +9,7 @@
 
 (ご参考動画: 画像をクリックすると動画のリンクに飛びます)
 
-<a href="https://youtu.be/c-ujQ83K3hw" target="_blank">
+<a href="https://youtu.be/ZEPLxOnUgyY" target="_blank">
   <img src="./img/samnail.png" alt="browser-presentation でブラウザでプレゼン、 PowerPoint/PDFファイルを生成" width="600" />
 </a>
 
