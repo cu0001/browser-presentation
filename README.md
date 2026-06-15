@@ -171,6 +171,11 @@ flowchart TD
     style EXP fill:#fff7ed,stroke:#f59e0b,stroke-width:2px
 ```
 
+* ブラウザで開くは index.html をダブルクリックしてファイルとして開く or "open index.html" というコマンドで開くことを意味しています。
+
+---
+
+
 ## 必要なモジュール
 
 エクスポート機能を使用するには、以下のモジュールが必要です。
