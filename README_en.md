@@ -254,6 +254,11 @@ If you are uneasy about installing modules locally, consider running in the **Cl
 
 ## Exporting
 
+> [!NOTE]
+> **Exports include the background (full page) by default.**  
+> Both `export-pptx.js` and `export-pdf.js` screenshot the entire viewport — **including the `body` background (e.g. a gradient frame)** — exactly as it appears on screen.  
+> To output only the `.slide-wrapper` (the white card) without the surrounding background, append `--card-only` to the command.
+
 ### PPTX
 
 Takes a screenshot of each slide using Puppeteer, and converts them to `.pptx` using python-pptx. The HTML/CSS design is saved exactly as images.
@@ -261,7 +266,11 @@ Takes a screenshot of each slide using Puppeteer, and converts them to `.pptx` u
 #### Claude Code
 
 ```bash
+# Default: with background (entire viewport)
 node ~/.claude/skills/browser-presentation/export-pptx.js index.html output.pptx
+
+# Card only (no background)
+node ~/.claude/skills/browser-presentation/export-pptx.js index.html output.pptx --card-only
 ```
 
 #### IBM Bob
@@ -272,12 +281,16 @@ node ~/.bob/skills/browser-presentation/export-pptx.js index.html output.pptx
 
 ### PDF
 
-Generates a PDF without headers and footers using Puppeteer's `page.pdf()`.
+Screenshots the entire viewport of each slide and assembles a PDF, one slide per page (no browser headers or footers).
 
 #### Claude Code
 
 ```bash
+# Default: with background (entire viewport)
 node ~/.claude/skills/browser-presentation/export-pdf.js index.html output.pdf
+
+# Card only (@media print approach; background depends on print styles)
+node ~/.claude/skills/browser-presentation/export-pdf.js index.html output.pdf --card-only
 ```
 
 #### IBM Bob
@@ -286,14 +299,21 @@ node ~/.claude/skills/browser-presentation/export-pdf.js index.html output.pdf
 node ~/.bob/skills/browser-presentation/export-pdf.js index.html output.pdf
 ```
 
+#### Output modes
+
+| Mode | Capture area | Use when |
+|---|---|---|
+| Default (with background) | Entire viewport (includes background frame) | You want it exactly as it appears on screen |
+| `--card-only` | `.slide-wrapper` only | You want the card alone (no background) |
+
 
 ## File Structure
 
 ```
 skills/
 ├── SKILL.md          # Skill definition (Instructions read by Claude)
-├── export-pptx.js    # PPTX export script
-└── export-pdf.js     # PDF export script
+├── export-pptx.js    # PPTX export script (default: with background / --card-only)
+└── export-pdf.js     # PDF export script (default: with background / --card-only)
 ```
 
 ## Style Variations

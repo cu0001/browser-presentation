@@ -1,6 +1,6 @@
 ---
 name: browser-presentation
-description: "Generate a browser-based slideshow presentation as three files: index.html, script.js, and style.css. Use this skill whenever the user asks to create a presentation, slide deck, or slideshow that runs in a browser — even if they don't say 'HTML' or '3 files'. Triggers include: 'プレゼン資料を作って', 'ブラウザプレゼン', 'ブラウザで動くプレゼン', 'make me a slideshow', 'create a presentation', 'HTML slides', 'browser presentation', 'index.html プレゼン'. The output is always exactly 3 files (index.html, script.js, style.css) with full slide navigation: prev/next buttons, keyboard arrow keys, slide number display, and animated CSS transitions between slides. IMPORTANT: Always apply modern design enhancements including gradients, shadows, hover effects, and visual polish to create professional, visually appealing presentations by default."
+description: "Generate a browser-based slideshow presentation as three files: index.html, script.js, and style.css. Use this skill whenever the user asks to create a presentation, slide deck, or slideshow that runs in a browser — even if they don't say 'HTML' or '3 files'. Triggers include: 'プレゼン資料を作って', 'ブラウザプレゼン', 'ブラウザで動くプレゼン', 'make me a slideshow', 'create a presentation', 'HTML slides', 'browser presentation', 'index.html プレゼン'. The output is always exactly 3 files (index.html, script.js, style.css) with full slide navigation: prev/next buttons, keyboard arrow keys, slide number display, and animated CSS transitions between slides. IMPORTANT: Always apply modern design enhancements including gradients, shadows, hover effects, and visual polish to create professional, visually appealing presentations by default. Can also theme the presentation after a real brand's design system (Stripe, Apple, Linear, Notion, Vercel, Spotify, Tesla, etc.) by pulling a DESIGN.md from the awesome-design-md collection — triggers include 'Stripe風のデザインで', 'Appleっぽく', 'make it look like Linear', 'use Notion's design', 'ブランドのデザインで'."
 ---
 
 # Browser Presentation Skill
@@ -22,6 +22,7 @@ Ask the user (or infer from context):
 - **Slide content**: either a full outline they provide, or ask them to share bullet points, and generate sensible slide content yourself
 - **Slide count**: aim for 5–10 slides unless the user specifies otherwise
 - **Visual style preference** (optional): minimal, bold, dark, corporate, colorful — default to a clean modern light theme
+- **Brand design system** (optional): if the user names a real brand ("Stripe風で", "make it look like Linear", etc.) or asks for a brand-matched look, apply a `DESIGN.md` theme from the awesome-design-md collection — see **Brand Design Systems** below
 
 If the user just says "make a presentation about X", generate 6–8 slides covering a logical arc: title → overview → 2-4 content slides → summary/conclusion.
 
@@ -308,13 +309,11 @@ After writing, tell the user:
 
 ---
 
-## Export: PPTX（スクリーンショット方式）
+## Export: PPTX（スクリーンショット方式・背景込みが既定）
 
-ユーザーが「PPTXに変換して」「パワーポイントにしてほしい」と言ったとき、または `index.html` から `.pptx` を生成するよう求められたときは、以下の `export-pptx.js` を使う。
+ユーザーが「PPTXに変換して」「パワーポイントにしてほしい」と言ったとき、または `index.html` から `.pptx` を生成するよう求められたときは、以下の `export-pptx.js` を使う。**既定で body 背景（グラデーション等）を含むフルページ撮影**になる。
 
-**前提:** Puppeteer（`@mermaid-js/mermaid-cli` の依存として `/opt/homebrew/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer` に存在）と python-pptx が利用可能であること。
-
-### export-pptx.js（スキルディレクトリに配置済み）
+**前提:** Puppeteer（`@mermaid-js/mermaid-cli` の依存として `${HOME}/.volta/.../@mermaid-js/mermaid-cli/node_modules/puppeteer` 等に存在）と python-pptx が利用可能であること。
 
 ```
 ~/.claude/skills/browser-presentation/export-pptx.js
@@ -322,30 +321,30 @@ After writing, tell the user:
 
 **実行コマンド:**
 ```bash
+# 既定: 背景込み（ビューポート全体を撮影）
 node ~/.claude/skills/browser-presentation/export-pptx.js index.html output.pptx
+
+# カードのみ（.slide-wrapper だけを撮影し、周囲の背景を入れない）
+node ~/.claude/skills/browser-presentation/export-pptx.js index.html output.pptx --card-only
 ```
 
 **動作の流れ:**
-1. Puppeteer で `index.html` を開く（viewport: 1920×1080）— コンテンツの下部切れを防ぐため高解像度を使用
-2. CSSトランジションを無効化してスナップショットをクリーンに取得
-3. `.slide` の数だけループし、各スライドを `.active` に切り替えて `.slide-wrapper` 要素をスクリーンショット
+1. Puppeteer で `index.html` を開く（viewport 1280×720＝16:9、`deviceScaleFactor: 2` の高解像度）
+2. トランジション/アニメーションを無効化し、`.controls` などのナビ要素のみ非表示にする（body 背景は残す）
+3. `.slide` の数だけループし、各スライドを `.active` に切り替えて**ビューポート全体**をスクリーンショット（`--card-only` 指定時は `.slide-wrapper` 要素のみ）
 4. 取得した PNG を python-pptx でスライドサイズ（13.33 × 7.5 インチ）のPPTXに貼り込む
 5. 一時ファイルを削除して完了
 
 **ポイント:**
 - HTML/CSSのデザインがそのまま画像として保存されるため、フォント・グラデーション・レイアウトが完全に再現される
-- ナビゲーションボタンは `.slide-wrapper` の外側にあるため、スクリーンショットには含まれない
-
-**ユーザーへの案内:**
-> `node ~/.claude/skills/browser-presentation/export-pptx.js index.html presentation.pptx` を実行するとPPTXが生成されます。
-
-または、Claude 自身が Bash ツールでそのまま実行することも可能。
+- 既定では白カード＋周囲の背景フレームが画面で見たまま出力される。背景を入れたくない場合のみ `--card-only`
+- ナビゲーションボタンは出力に含まれない
 
 ---
 
-## Export: PDF（ヘッダー/フッターなし）
+## Export: PDF（背景込みが既定・ヘッダー/フッターなし）
 
-ユーザーがブラウザのヘッダー（URL・日付）を含めずPDFにしたい場合は `export-pdf.js` を使う。
+`index.html` を PDF にするときは `export-pdf.js` を使う。**既定で body 背景を含むフルページ撮影**になり、各スライドを1ページずつ出力する（ブラウザのヘッダー＝URL・日付は付かない）。
 
 ```
 ~/.claude/skills/browser-presentation/export-pdf.js
@@ -353,10 +352,59 @@ node ~/.claude/skills/browser-presentation/export-pptx.js index.html output.pptx
 
 **実行コマンド:**
 ```bash
+# 既定: 背景込み（ビューポート全体を撮影し、画像を1ページ1枚でPDF化）
 node ~/.claude/skills/browser-presentation/export-pdf.js index.html output.pdf
+
+# カードのみ（@media print CSS を使う従来方式。背景は print スタイル依存＝通常は白）
+node ~/.claude/skills/browser-presentation/export-pdf.js index.html output.pdf --card-only
 ```
 
-**動作:** Puppeteer の `page.pdf()` で `displayHeaderFooter: false`・`margin: 0` を指定し、`@media print` CSS によって全スライドを1ページずつ出力する。
+**動作:**
+- 既定: 各スライドをビューポート全体（1280×720）で撮影 → PNG を1ページ1枚に並べた一時HTMLを Puppeteer の `page.pdf()`（`printBackground: true`・`margin: 0`・ページサイズ 1280×720px）で出力（Pillow / img2pdf 不要）
+- `--card-only`: `page.pdf()` で `displayHeaderFooter: false`・`margin: 0` を指定し、`@media print` CSS によって全スライドを1ページずつ出力（背景は print スタイル依存）
+
+---
+
+## Export 共通の注意
+
+- 撮影はビューポート（1280×720＝16:9）基準のため、各スライドの内容は `.slide-wrapper` 内に**収まっている**こと（`overflow: hidden` で見切れる内容は出力でも切れる）。情報量の多いスライドは余白・フォントサイズを詰めて1画面に収める。
+- 16:9（1280×720）で撮影し PPTX（13.33×7.5）/ PDF にそのまま対応するため、アスペクト比の歪みは生じない。
+- Claude 自身が Bash ツールでそのまま実行してよい。
+
+---
+
+## Brand Design Systems (awesome-design-md)
+
+When the user wants the presentation to match a real brand's look — e.g. "Stripe風のデザインで", "Appleっぽくして", "make it look like Linear", "use Vercel's design language", "ブランドのデザインで作って" — pull that brand's `DESIGN.md` from the **awesome-design-md** collection and use its design tokens to drive `style.css`.
+
+> Source: <https://github.com/VoltAgent/awesome-design-md> — a curated set of `DESIGN.md` files (colors, typography, spacing, radii, shadows) extracted from popular brands' design systems, made for AI agents to generate matching UI.
+
+### How to use a brand theme
+
+1. **Pick the brand slug.** Map the requested brand to a slug from the list below. If the user names a brand that isn't in the list, tell them it's not available and either suggest the closest match or fall back to a regular theme.
+
+2. **Fetch the DESIGN.md.** Read it with the WebFetch tool, or with Bash + curl:
+   ```bash
+   curl -sL https://raw.githubusercontent.com/VoltAgent/awesome-design-md/main/design-md/<slug>/DESIGN.md
+   ```
+   (Mirror URL: `https://getdesign.md/<slug>/design-md`.) Each file is YAML-style frontmatter + notes defining `colors`, `typography` (fontFamily / size / weight / lineHeight / letterSpacing), spacing, border-radius, shadows, and overall design intent.
+
+3. **Translate the tokens into `style.css`.** Apply the brand's values to the existing slide structure rather than the default gradient template:
+   - Map `colors.canvas` / `canvas-soft` → slide & body background; `colors.ink` → headings; `colors.ink-secondary`/`ink-mute` → body text; `colors.primary` → accents, bullets, nav buttons, `h2` underline.
+   - Use the brand's `typography` families, weights, and letter-spacing for `h1`/`h2`/`subtitle`/`li`. If a font isn't a system font, load the closest Google Fonts equivalent (the DESIGN.md usually lists fallbacks).
+   - Carry over the brand's border-radius, shadow, and spacing feel (e.g. tight pill buttons, hairline borders, dark dashboard shells).
+   - Keep all structural rules intact: `100vw × 100vh` slides, fixed overlay `.controls`, `opacity + transform` transitions, `clamp()` font sizing, and the `@media print` block.
+
+4. **Tell the user** which brand design system was applied and the source, e.g.:
+   > "Stripe のデザインシステム（awesome-design-md）をもとにスタイリングしました。"
+
+Honor the brand tokens over the default "Design Enhancement Guidelines" when the two conflict — the goal is brand fidelity. You may still add subtle shadows/transitions for polish as long as they fit the brand.
+
+### Available brand slugs
+
+`airbnb`, `airtable`, `apple`, `binance`, `bmw`, `bmw-m`, `bugatti`, `cal`, `claude`, `clay`, `clickhouse`, `cohere`, `coinbase`, `composio`, `cursor`, `dell-1996`, `elevenlabs`, `expo`, `ferrari`, `figma`, `framer`, `hashicorp`, `hp`, `ibm`, `intercom`, `kraken`, `lamborghini`, `linear.app`, `lovable`, `mastercard`, `meta`, `minimax`, `mintlify`, `miro`, `mistral.ai`, `mongodb`, `nike`, `nintendo-2001`, `notion`, `nvidia`, `ollama`, `opencode.ai`, `pinterest`, `playstation`, `posthog`, `raycast`, `renault`, `replicate`, `resend`, `revolut`, `runwayml`, `sanity`, `sentry`, `shopify`, `slack`, `spacex`, `spotify`, `starbucks`, `stripe`, `supabase`, `superhuman`, `tesla`, `theverge`, `together.ai`, `uber`, `vercel`, `vodafone`, `voltagent`, `warp`, `webflow`, `wired`, `wise`, `x.ai`, `zapier`
+
+> Note slugs with suffixes/dots: `linear.app`, `mistral.ai`, `opencode.ai`, `together.ai`, `x.ai`, `bmw-m`, `dell-1996`, `nintendo-2001`. The list grows over time — if a requested brand isn't here, check the repo's `design-md/` folder for newer additions.
 
 ---
 
@@ -521,3 +569,4 @@ ul li::before {
 - [ ] CSS transitions use `opacity` + `transform` (not `display: none` toggling)
 - [ ] Keyboard navigation works for ←→ and Space
 - [ ] Text is readable: sufficient contrast, reasonable font sizes
+- [ ] If a brand design system was requested, the DESIGN.md tokens (colors, typography) were actually applied and the source was mentioned to the user

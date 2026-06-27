@@ -259,6 +259,11 @@ pip install python-pptx
 
 ## エクスポート
 
+> [!NOTE]
+> **既定で背景込み（フルページ）で出力されます。**  
+> `export-pptx.js` / `export-pdf.js` はどちらも、画面で見たまま **`body` の背景（グラデーション枠など）を含めて**ビューポート全体を撮影します。  
+> 周囲の背景を入れず `.slide-wrapper`（白いカード）だけを出力したい場合は、コマンド末尾に `--card-only` を付けてください。
+
 ### PPTX
 
 Puppeteer で各スライドをスクリーンショットし、python-pptx で `.pptx` に変換します。HTML/CSS のデザインがそのまま画像として保存されます。
@@ -266,7 +271,11 @@ Puppeteer で各スライドをスクリーンショットし、python-pptx で 
 #### Claude Code
 
 ```bash
+# 既定: 背景込み（ビューポート全体）
 node ~/.claude/skills/browser-presentation/export-pptx.js index.html output.pptx
+
+# カードのみ（背景なし）
+node ~/.claude/skills/browser-presentation/export-pptx.js index.html output.pptx --card-only
 ```
 
 #### IBM Bob
@@ -277,12 +286,16 @@ node ~/.bob/skills/browser-presentation/export-pptx.js index.html output.pptx
 
 ### PDF
 
-Puppeteer の `page.pdf()` でヘッダー・フッターなしの PDF を生成します。
+各スライドのビューポート全体を撮影し、1 スライド 1 ページで PDF 化します（ブラウザのヘッダー・フッターは付きません）。
 
 #### Claude Code
 
 ```bash
+# 既定: 背景込み（ビューポート全体）
 node ~/.claude/skills/browser-presentation/export-pdf.js index.html output.pdf
+
+# カードのみ（@media print 方式・背景は print スタイル依存）
+node ~/.claude/skills/browser-presentation/export-pdf.js index.html output.pdf --card-only
 ```
 
 #### IBM Bob
@@ -291,14 +304,21 @@ node ~/.claude/skills/browser-presentation/export-pdf.js index.html output.pdf
 node ~/.bob/skills/browser-presentation/export-pdf.js index.html output.pdf
 ```
 
+#### 出力モードの違い
+
+| モード | キャプチャ範囲 | 用途 |
+|---|---|---|
+| 既定（背景込み） | ビューポート全体（背景フレーム含む） | 画面で見たまま出力したいとき |
+| `--card-only` | `.slide-wrapper` のみ | カード単体（背景なし）で出力したいとき |
+
 
 ## ファイル構成
 
 ```
 skills/
 ├── SKILL.md          # スキル定義（Claude が読む指示書）
-├── export-pptx.js    # PPTX エクスポートスクリプト
-└── export-pdf.js     # PDF エクスポートスクリプト
+├── export-pptx.js    # PPTX エクスポートスクリプト（既定=背景込み / --card-only）
+└── export-pdf.js     # PDF エクスポートスクリプト（既定=背景込み / --card-only）
 ```
 
 ## スタイルバリエーション
